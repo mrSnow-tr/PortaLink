@@ -1,5 +1,4 @@
 # PortaLink
-# PortaLink
 
 ### Turn local, HTTP, or FTP resources into temporary public links.
 
