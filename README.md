@@ -1,10 +1,15 @@
 # PortaLink
+# PortaLink
 
 ### Turn local, HTTP, or FTP resources into temporary public links.
 
-**PortaLink** is a lightweight Python library that lets you expose a resource through a temporary public URL using a local HTTP server and a **Cloudflare Quick Tunnel**.
+**PortaLink** is a lightweight Python library for exposing local and remote
+resources through temporary public URLs using a local HTTP server and a
+**Cloudflare Quick Tunnel**.
 
-It can share resources that are normally reachable only from your own machine or private network, including local files and remote HTTP/HTTPS/FTP resources.
+It can share resources that are normally reachable only from your own machine
+or private network, including local files, HTTP/HTTPS resources, and FTP
+resources.
 
 > **Private resource → PortaLink → Local HTTP server → Cloudflare Tunnel → Public URL**
 
@@ -14,26 +19,37 @@ It can share resources that are normally reachable only from your own machine or
 
 - 📁 Share a **local file** through a public URL
 - 📂 Share a **local directory** as an on-the-fly ZIP archive
-- 🌐 Share an **HTTP/HTTPS URL**
+- 🌐 Share an **HTTP/HTTPS resource**
 - 📡 Share an **FTP resource**
-- 🔗 Generate a temporary public URL through Cloudflare Tunnel
+- 🔗 Generate temporary public URLs through Cloudflare Tunnel
 - ⏱️ Automatic share expiration
 - 🔢 Maximum download limits
 - 📊 Download statistics
-- 🚀 Streaming downloads instead of loading the entire file into memory
-- 📦 HTTP `Range` request support for resumable/partial downloads
+- 🚀 Streaming downloads
+- 📦 HTTP `Range` request support
 - 🔄 Automatic Cloudflare tunnel reconnection
 - 🧹 Automatic cleanup of expired and exhausted shares
-- 🖥️ Built-in HTTP API
-- 📋 Built-in dashboard endpoint
-- 🧩 Python API designed to be embedded into other projects
+- 🖥️ Built-in HTTP server and API
+- 🧩 Python API for integration into other projects
 - 🪵 Rotating application logs
 - 🔐 Random share IDs
 - 🧹 Filename sanitization
-- 🪶 Uses Python's standard library for the application itself
+- 🪶 Lightweight architecture using Python's standard library
 
 ---
 
+## 🧠 What is PortaLink?
+
+PortaLink was created to solve a simple problem:
+
+> **How can a resource that is accessible from my machine or private network
+> be temporarily shared through a public link without first uploading it to
+> a separate cloud-storage service?**
+
+For example, imagine a file is available only inside your home network:
+
+```text
+http://192.168.1.100/files/example.mp4
 # 🧠 What is PortaLink?
 
 Suppose you have a file on your computer:
