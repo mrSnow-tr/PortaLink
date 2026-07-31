@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "portalink"
+version = "1.0.0"
+description = "Turn local, HTTP, and FTP resources into temporary public links through Cloudflare Tunnel."
+readme = "README.md"
+requires-python = ">=3.10"
+
+authors = [
+    { name = "mrSnow-tr" }
+]
+
+license = "GPL-3.0-only"
+
+keywords = [
+    "file-sharing",
+    "tunneling",
+    "cloudflare",
+    "cloudflared",
+    "http",
+    "ftp",
+    "file-server",
+    "networking"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Internet",
+    "Topic :: System :: Networking"
+]
+
+[project.urls]
+Homepage = "https://github.com/mrSnow-tr/PortaLink"
+Repository = "https://github.com/mrSnow-tr/PortaLink"
+Issues = "https://github.com/mrSnow-tr/PortaLink/issues"
+
+[tool.setuptools.packages.find]
+include = ["PortaLink*"]
