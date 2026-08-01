@@ -1,8 +1,8 @@
-# PortaLink
+# Sharelink
 
 ### Turn local, HTTP, or FTP resources into temporary public links.
 
-**PortaLink** is a lightweight Python library for exposing local and remote
+**Sharelink** is a lightweight Python library for exposing local and remote
 resources through temporary public URLs using a local HTTP server and a
 **Cloudflare Quick Tunnel**.
 
@@ -10,7 +10,7 @@ It can share resources that are normally reachable only from your own machine
 or private network, including local files, HTTP/HTTPS resources, and FTP
 resources.
 
-> **Private resource → PortaLink → Local HTTP server → Cloudflare Tunnel → Public URL**
+> **Private resource → Sharelink → Local HTTP server → Cloudflare Tunnel → Public URL**
 
 ---
 
@@ -37,9 +37,9 @@ resources.
 
 ---
 
-## 🧠 What is PortaLink?
+## 🧠 What is Sharelink?
 
-PortaLink was created to solve a simple problem:
+Sharelink was created to solve a simple problem:
 
 > **How can a resource that is accessible from my machine or private network
 > be temporarily shared through a public link without first uploading it to
@@ -49,7 +49,7 @@ For example, imagine a file is available only inside your home network:
 
 ```text
 http://192.168.1.100/files/example.mp4
-# 🧠 What is PortaLink?
+# 🧠 What is Sharelink?
 
 Suppose you have a file on your computer:
 
@@ -59,7 +59,7 @@ Suppose you have a file on your computer:
 
 Normally, someone outside your network cannot download it directly.
 
-PortaLink creates a local HTTP server and exposes that server through a Cloudflare Quick Tunnel:
+Sharelink creates a local HTTP server and exposes that server through a Cloudflare Quick Tunnel:
 
 ```text
                      YOUR DEVICE
@@ -68,7 +68,7 @@ PortaLink creates a local HTTP server and exposes that server through a Cloudfla
 │  Local File                                            │
 │      │                                                │
 │      ▼                                                │
-│  PortaLink                                            │
+│  Sharelink                                            │
 │      │                                                │
 │      ▼                                                │
 │  Local HTTP Server                                     │
@@ -90,13 +90,13 @@ PortaLink creates a local HTTP server and exposes that server through a Cloudfla
 
 The original resource does **not need to be uploaded to a cloud-storage service first**.
 
-For remote HTTP/HTTPS and FTP sources, PortaLink can also act as a streaming bridge:
+For remote HTTP/HTTPS and FTP sources, Sharelink can also act as a streaming bridge:
 
 ```text
 Private HTTP/FTP resource
           │
           ▼
-      PortaLink
+      Sharelink
           │
           ▼
    Public Cloudflare URL
@@ -105,7 +105,7 @@ Private HTTP/FTP resource
       Downloader
 ```
 
-This makes PortaLink useful when a resource is accessible from your network but not directly accessible from the public internet.
+This makes Sharelink useful when a resource is accessible from your network but not directly accessible from the public internet.
 
 ---
 
@@ -113,7 +113,7 @@ This makes PortaLink useful when a resource is accessible from your network but 
 
 ## Requirements
 
-PortaLink is designed to require only:
+Sharelink is designed to require only:
 
 - **Python 3**
 - **Cloudflare `cloudflared`**
@@ -122,7 +122,7 @@ The Python application itself uses the Python standard library and does not requ
 
 ### Cloudflared
 
-PortaLink can automatically locate `cloudflared` if it is already installed.
+Sharelink can automatically locate `cloudflared` if it is already installed.
 
 If it cannot find it, PortaLink can download an appropriate `cloudflared` binary and cache it under:
 
@@ -132,7 +132,7 @@ If it cannot find it, PortaLink can download an appropriate `cloudflared` binary
 
 The application therefore normally does **not** require you to manually install `cloudflared`.
 
-> The `cloudflared` binary is third-party software developed by Cloudflare. It is not part of PortaLink's original source code.
+> The `cloudflared` binary is third-party software developed by Cloudflare. It is not part of Sharelink's original source code.
 
 ---
 
@@ -141,8 +141,8 @@ The application therefore normally does **not** require you to manually install 
 Clone the repository:
 
 ```bash
-git clone https://github.com/mrSnow-tr/Portalink.git
-cd PortaLink
+git clone https://github.com/mrSnow-tr/Sharelink.git
+cd Sharelink
 ```
 
 Then use the package directly from the repository, or install/package it according to the project's Python packaging configuration.
@@ -160,7 +160,7 @@ python3 test_local.py
 The simplest example:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 file_path = "/path/to/example.zip"
 
@@ -199,10 +199,10 @@ Public URL: https://example-random-name.trycloudflare.com
 
 # 📂 Share a Directory
 
-PortaLink can expose a directory as an automatically generated ZIP archive.
+Sharelink can expose a directory as an automatically generated ZIP archive.
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 folder = "/path/to/my_folder"
 
@@ -220,12 +220,12 @@ The ZIP archive is generated as needed instead of requiring you to create the ar
 
 # 🌐 Share an HTTP/HTTPS URL
 
-PortaLink can also use an HTTP or HTTPS resource as the source.
+Sharelink can also use an HTTP or HTTPS resource as the source.
 
 Example:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 url = "http://192.168.1.100/files/example.mp4"
 
@@ -257,7 +257,7 @@ can be exposed through a public Sharelink URL:
 https://something-random.trycloudflare.com
 ```
 
-The remote downloader accesses Sharelink, while PortaLink retrieves the original resource.
+The remote downloader accesses Sharelink, while Sharelink retrieves the original resource.
 
 ---
 
@@ -266,7 +266,7 @@ The remote downloader accesses Sharelink, while PortaLink retrieves the original
 Share an FTP URL directly:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 ftp_url = "ftp://example.com/path/to/file.zip"
 
@@ -287,7 +287,7 @@ Anonymous FTP URLs are supported when the server allows anonymous access.
 You can also provide FTP credentials separately.
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 with ShareManager() as manager:
     share = manager.create_share(
@@ -359,7 +359,7 @@ creates a link that is intended to be available for up to one hour and usable fo
 For a one-time file transfer:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 with ShareManager() as manager:
     share = manager.create_share(
@@ -412,7 +412,7 @@ share.downloads_remaining()
 
 # 📊 Statistics
 
-PortaLink provides download statistics.
+Sharelink provides download statistics.
 
 ```python
 stats = share.statistics()
@@ -428,7 +428,7 @@ data = share.to_dict()
 print(data)
 ```
 
-This can be useful when integrating PortaLink into another application, dashboard, bot, or automation system.
+This can be useful when integrating Sharelink into another application, dashboard, bot, or automation system.
 
 ---
 
@@ -437,7 +437,7 @@ This can be useful when integrating PortaLink into another application, dashboar
 Create a manager:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 manager = ShareManager()
 ```
@@ -494,7 +494,7 @@ manager.shutdown()
 The recommended approach is:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 with ShareManager() as manager:
     share = manager.create_share("/path/to/file.zip")
@@ -510,12 +510,12 @@ When the `with` block ends, Sharelink shuts down active sessions and tunnel proc
 
 # ⚙️ Custom Configuration
 
-PortaLink provides `ShareConfig` for configuring the embedded server, sharing behavior, logging, and tunnel reconnection.
+Sharelink provides `ShareConfig` for configuring the embedded server, sharing behavior, logging, and tunnel reconnection.
 
 Example:
 
 ```python
-from PortaLink import ShareManager, ShareConfig
+from Sharelink import ShareManager, ShareConfig
 
 config = ShareConfig(
     port=8080,
@@ -569,7 +569,7 @@ config = ShareConfig(
 
 # 📡 HTTP Range Requests
 
-PortaLink supports HTTP byte-range requests.
+Sharelink supports HTTP byte-range requests.
 
 This is important for large files because clients can request only a specific portion of the resource.
 
@@ -579,7 +579,7 @@ For example:
 Range: bytes=1000000-1999999
 ```
 
-This makes PortaLink more suitable for:
+This makes Sharelink more suitable for:
 
 - Large downloads
 - Download managers
@@ -592,7 +592,7 @@ This makes PortaLink more suitable for:
 
 # 🎬 Streaming
 
-PortaLink is designed around streaming rather than loading an entire resource into RAM before sending it.
+Sharelink is designed around streaming rather than loading an entire resource into RAM before sending it.
 
 Conceptually:
 
@@ -624,14 +624,14 @@ This helps keep memory usage reasonable even when sharing large files.
 
 # 🔄 Tunnel Reconnection
 
-PortaLink monitors the `cloudflared` process.
+Sharelink monitors the `cloudflared` process.
 
-If the tunnel disconnects unexpectedly, PortaLink can attempt to reconnect automatically.
+If the tunnel disconnects unexpectedly, Sharelink can attempt to reconnect automatically.
 
 Configure it with:
 
 ```python
-from PortaLink import ShareConfig
+from Sharelink import ShareConfig
 
 config = ShareConfig(
     reconnect_delay=5.0,
@@ -647,13 +647,13 @@ config = ShareConfig(
 )
 ```
 
-When a new tunnel URL is generated, the PortaLink session updates its public URL accordingly.
+When a new tunnel URL is generated, the Sharelink session updates its public URL accordingly.
 
 ---
 
 # 🖥️ Built-in HTTP Server
 
-PortaLink includes an embedded threaded HTTP server.
+Sharelink includes an embedded threaded HTTP server.
 
 The server is normally bound to:
 
@@ -678,7 +678,7 @@ and provides API endpoints for share management and status information.
 
 # 🌐 Public URL Architecture
 
-A typical PortaLink session looks like this:
+A typical Sharelink session looks like this:
 
 ```text
                  INTERNET
@@ -694,7 +694,7 @@ A typical PortaLink session looks like this:
           127.0.0.1:8080
                     │
           ┌─────────┴─────────┐
-          │     PortaLink     │
+          │     Sharelink     │
           └─────────┬─────────┘
                     │
           ┌─────────┼──────────┐
@@ -707,7 +707,7 @@ A typical PortaLink session looks like this:
 
 # 📱 Android / Termux
 
-PortaLink is written in Python and can be useful on Linux-based environments such as **Termux**, provided that Python and the required `cloudflared` binary are available for the device architecture.
+Sharelink is written in Python and can be useful on Linux-based environments such as **Termux**, provided that Python and the required `cloudflared` binary are available for the device architecture.
 
 Example:
 
@@ -750,7 +750,7 @@ with ShareManager() as manager:
 
 # 🪵 Logging
 
-PortaLink provides application logging with rotating log files.
+Sharelink provides application logging with rotating log files.
 
 The default log directory is:
 
@@ -775,7 +775,7 @@ Logging can be configured through `ShareConfig` and `configure_logging()`.
 The project is divided into several modules:
 
 ```text
-PortaLink/
+Sharelink/
 │
 ├── __init__.py       Public package exports
 ├── api.py            Public API and ShareManager interface
@@ -830,7 +830,7 @@ A share generally follows this lifecycle:
 
 # 🔐 Security Considerations
 
-PortaLink is specifically designed to make resources accessible from outside the local network.
+Sharelink is specifically designed to make resources accessible from outside the local network.
 
 That is powerful, but it means you should treat every generated public URL as a real internet-facing access point.
 
@@ -879,7 +879,7 @@ manager.delete_share(share.share_id)
 
 # ⚠️ Important: Public URL ≠ Private URL
 
-A PortaLink URL is intended to be reachable from the public internet.
+A Sharelink URL is intended to be reachable from the public internet.
 
 Do not assume that because the original resource is private:
 
@@ -887,21 +887,21 @@ Do not assume that because the original resource is private:
 http://192.168.x.x/...
 ```
 
-the resulting PortaLink URL is private.
+the resulting Sharelink URL is private.
 
-The purpose of PortaLink is precisely to bridge that private resource to a public endpoint.
+The purpose of Sharelink is precisely to bridge that private resource to a public endpoint.
 
 ---
 
 # 🔒 Privacy
 
-PortaLink itself does not function as a permanent cloud-storage service.
+Sharelink itself does not function as a permanent cloud-storage service.
 
 The source remains on the source system or remote source and is served through the Sharelink process.
 
 However, the public tunnel is provided by **Cloudflare**, and traffic passes through the tunnel infrastructure required to make the resource publicly reachable.
 
-Review the applicable Cloudflare terms and privacy documentation before using PortaLink for sensitive or regulated data.
+Review the applicable Cloudflare terms and privacy documentation before using Sharelink for sensitive or regulated data.
 
 ---
 
@@ -909,7 +909,7 @@ Review the applicable Cloudflare terms and privacy documentation before using Po
 
 Sharelink uses **Cloudflare `cloudflared`** to establish the public tunnel.
 
-PortaLink can automatically download the binary for supported Linux architectures when no suitable installation is found.
+Sharelink can automatically download the binary for supported Linux architectures when no suitable installation is found.
 
 Supported automatic Linux architectures currently include:
 
@@ -919,13 +919,13 @@ aarch64
 armv7l
 ```
 
-If `cloudflared` is already installed, PortaLink attempts to use the existing executable before downloading another copy.
+If `cloudflared` is already installed, Sharelink attempts to use the existing executable before downloading another copy.
 
 You can also configure a custom binary path:
 
 ```python
 from pathlib import Path
-from PortaLink import ShareConfig
+from Sharelink import ShareConfig
 
 config = ShareConfig(
     cloudflared_binary_path=Path("/path/to/cloudflared")
@@ -972,7 +972,7 @@ You can also install `cloudflared` manually and make sure it is available in you
 
 ## Public URL does not appear
 
-PortaLink waits for `cloudflared` to announce the tunnel URL.
+Sharelink waits for `cloudflared` to announce the tunnel URL.
 
 You can increase the timeout:
 
@@ -1025,7 +1025,7 @@ The default local server port is:
 You can choose another port:
 
 ```python
-from PortaLink import ShareConfig
+from Sharelink import ShareConfig
 
 config = ShareConfig(
     port=9090
@@ -1034,14 +1034,14 @@ config = ShareConfig(
 
 ---
 
-# 🧑‍💻 Using PortaLink in Your Own Project
+# 🧑‍💻 Using Sharelink in Your Own Project
 
-PortaLink is designed as a Python library, so it can be integrated into other applications.
+Sharelink is designed as a Python library, so it can be integrated into other applications.
 
 For example:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 def create_public_file_link(file_path):
     with ShareManager() as manager:
@@ -1054,7 +1054,7 @@ def create_public_file_link(file_path):
         return share.public_url
 ```
 
-This makes it possible to integrate PortaLink with:
+This makes it possible to integrate Sharelink with:
 
 - Telegram bots
 - Discord bots
@@ -1074,7 +1074,7 @@ This makes it possible to integrate PortaLink with:
 A program can create a link and automatically use it somewhere else:
 
 ```python
-from PortaLink import ShareManager
+from Sharelink import ShareManager
 
 with ShareManager() as manager:
     share = manager.create_share(
@@ -1094,7 +1094,7 @@ with ShareManager() as manager:
 
 # 📦 Project Goals
 
-PortaLink is designed around a simple idea:
+Sharelink is designed around a simple idea:
 
 > **If a resource is reachable from your machine, make it temporarily reachable from anywhere without first uploading it to a separate file-hosting service.**
 
@@ -1173,7 +1173,7 @@ Replace the address above with the project's official security contact before pu
 
 # 📜 License
 
-PortaLink is distributed under the license included in this repository.
+Sharelink is distributed under the license included in this repository.
 
 See:
 
@@ -1185,7 +1185,7 @@ for the complete terms.
 
 ## Attribution
 
-PortaLink was created and is maintained by:
+Sharelink was created and is maintained by:
 
 **Mr.Snow**
 
@@ -1217,7 +1217,7 @@ The author may provide written permission or a separate commercial agreement whe
 
 Created by **Mr.Snow**.
 
-PortaLink started as a personal project for solving a simple problem:
+Sharelink started as a personal project for solving a simple problem:
 
 **How can a file or resource that is accessible from my local environment be shared through a temporary public link without first uploading it to cloud storage?**
 
@@ -1227,7 +1227,7 @@ The project is developed with the goal of keeping the tool lightweight, practica
 
 # ⭐ Support the Project
 
-If PortaLink is useful to you:
+If Sharelink is useful to you:
 
 - ⭐ Star the repository
 - 🐛 Report bugs
@@ -1240,7 +1240,7 @@ If PortaLink is useful to you:
 
 # 📌 Disclaimer
 
-PortaLink is a networking and file-sharing tool.
+Sharelink is a networking and file-sharing tool.
 
 The author does not control what users choose to expose through it.
 
@@ -1253,13 +1253,13 @@ Users are responsible for:
 - Their use of third-party services
 - Compliance with applicable laws and service terms
 
-Do not use PortaLink to expose data that you do not have permission to share.
+Do not use Sharelink to expose data that you do not have permission to share.
 
 ---
 
 ## Credits
 
-### PortaLink
+### Sharelink
 
 Created by **Mr.Snow**
 
@@ -1267,13 +1267,13 @@ Created by **Mr.Snow**
 
 Public tunneling is provided through **Cloudflare `cloudflared`**.
 
-PortaLink is an independent project and is not affiliated with or endorsed by Cloudflare.
+Sharelink is an independent project and is not affiliated with or endorsed by Cloudflare.
 
 ---
 
 <div align="center">
 
-**PortaLink**
+**Sharelink**
 
 ### Private resources → Temporary public links
 
